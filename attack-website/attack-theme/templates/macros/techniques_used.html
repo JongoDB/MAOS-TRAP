@@ -1,0 +1,138 @@
+{% import 'macros/clean_output.html' as clean_output %}
+
+{% macro techniques_used(technique_table_data, title, domain, type, citations=None) %}
+{% if title %}
+<h2 class="pt-3 mb-2" id="techniques">{{title}}</h2>
+{% endif %}
+<div class="tables-mobile">
+<table class="table techniques-used background table-bordered">
+    <thead>
+        <tr>
+            {% if domain %}
+            <th class="p-2" scope="col">Domain</th>
+            {% endif %}
+            <th class="p-2" colspan="2">ID</th>
+            <th class="p-2" scope="col">Name</th>
+            {% if type %}
+            <th class="p-2" scope="col">{{type}}</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for technique in technique_table_data %}
+            {% if technique.technique_used %}
+                {% if domain %}
+                <tr class="technique {{technique.domain}}" id="{{technique.domain}}">
+                {% else %}
+                <tr class="technique" id="uses-{{technique.id}}">
+                {% endif %}
+                    {% if domain %}
+                    <td>
+                        {% if technique.domain == "enterprise" %}
+                            Enterprise
+                        {% elif technique.domain == "mobile" %}
+                            Mobile
+                        {% elif technique.domain == "ics" %}
+                            ICS
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                    <td colspan="2">
+                        <a href="/techniques/{{technique.id}}">{{technique.id}}</a>
+                    </td>
+                    <td>
+                        <a href="/techniques/{{technique.id}}">{{technique.name}}</a>
+                    </td>
+                    {% if type %}
+                    <td>
+                        {{clean_output.stixToHTML(technique.descr, citations)}}
+                    </td>
+                    {% endif %}
+                </tr>
+                {% for subtechnique in technique.subtechniques %}
+                    {% if domain %}
+                    <tr class="sub technique {{technique.domain}}" id="{{technique.domain}}">
+                    {% else %}
+                    <tr class="sub technique" id="uses-{{technique.id}}-{{subtechnique.id}}">
+                    {% endif %}
+                        {% if domain %}
+                        <td></td>
+                        {% endif %}
+                        <td></td>
+                        <td>
+                            <a href="/techniques/{{technique.id}}/{{subtechnique.id}}">.{{subtechnique.id}}</a>
+                        </td>
+                        <td>
+                            <a href="/techniques/{{technique.id}}/{{subtechnique.id}}">{{subtechnique.name}}</a>
+                        </td>
+                        {% if type %}
+                        <td>
+                            {{clean_output.stixToHTML(subtechnique.descr, citations)}}
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                {% for subtechnique in technique.subtechniques %}
+                    {% if loop.first %}
+                        {% if domain %}
+                        <tr class="sub technique noparent {{technique.domain}}" id="{{technique.domain}}">
+                        {% else %}
+                        <tr class="sub technique noparent" id="uses-{{technique.id}}-{{subtechnique.id}}">
+                        {% endif %}
+                            {% if domain %}
+                            <td>
+                                {% if technique.domain == "enterprise" %}
+                                    Enterprise
+                                {% elif technique.domain == "mobile" %}
+                                    Mobile
+                                {% elif technique.domain == "ics" %}
+                                    ICS
+                                {% endif %} 
+                            </td>
+                            {% endif %}
+                            <td>
+                                <a href="/techniques/{{technique.id}}">{{technique.id}}</a>
+                            </td>
+                            <td>
+                                <a href="/techniques/{{technique.id}}/{{subtechnique.id}}">.{{subtechnique.id}}</a>
+                            </td>
+                            <td>
+                                <a href="/techniques/{{technique.id}}">{{technique.name}}</a>: <a href="/techniques/{{technique.id}}/{{subtechnique.id}}">{{subtechnique.name}}</a>
+                            </td>
+                            {% if type %}
+                            <td>
+                                {{clean_output.stixToHTML(subtechnique.descr, citations)}}
+                            </td>
+                            {% endif %}
+                        </tr>
+                    {% else %}
+                        {% if domain %}
+                        <tr class="sub technique {{technique.domain}}" id="{{technique.domain}}">
+                        {% else %}
+                        <tr class="sub technique" id="uses-{{technique.id}}-{{subtechnique.id}}">
+                        {% endif %}
+                            {% if domain %}
+                            <td></td>
+                            {% endif %}
+                            <td></td>
+                            <td>
+                                <a href="/techniques/{{technique.id}}/{{subtechnique.id}}">.{{subtechnique.id}}</a>
+                            </td>
+                            <td>
+                                <a href="/techniques/{{technique.id}}">{{technique.name}}</a>: <a href="/techniques/{{technique.id}}/{{subtechnique.id}}">{{subtechnique.name}}</a>
+                            </td>
+                            {% if type %}
+                            <td>
+                                {{clean_output.stixToHTML(subtechnique.descr, citations)}}
+                            </td>
+                            {% endif %}
+                        </tr>                        
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endmacro %}

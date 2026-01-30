@@ -1,0 +1,4 @@
+Title: enterprise Techniques
+Template: general/json
+save_as: software/S0097/S0097-enterprise-layer.json
+json: {"description": "Enterprise techniques used by Ping, ATT&CK software S0097 (v1.4)", "name": "Ping (S0097)", "domain": "enterprise-attack", "versions": {"layer": "4.5", "attack": "17", "navigator": "5.1.0"}, "techniques": [{"techniqueID": "T1018", "comment": "[Ping](https://attack.mitre.org/software/S0097) can be used to identify remote systems within a network.(Citation: TechNet Ping)", "score": 1, "color": "#66b1ff", "showSubtechniques": false}], "gradient": {"colors": ["#ffffff", "#66b1ff"], "minValue": 0, "maxValue": 1}, "legendItems": [{"label": "used by Ping", "color": "#66b1ff"}]}

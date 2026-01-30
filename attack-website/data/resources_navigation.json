@@ -1,0 +1,141 @@
+{
+  "name": "Resources",
+  "id": "resources",
+  "children": [
+    {
+      "name": "Get Started",
+      "id": "get-started",
+      "path": "/resources/",
+      "children": []
+    },
+    {
+      "name": "Learn More about ATT&CK",
+      "id": "learn-more-about-attack",
+      "path": "/resources/learn-more-about-attack/",
+      "children": [
+        {
+          "name": "Presentation Archive",
+          "id": "presentation-archive",
+          "path": "/resources/learn-more-about-attack/presentation-archive/",
+          "children": []
+        },
+        {
+          "name": "Trainings",
+          "id": "training",
+          "path": "/resources/learn-more-about-attack/training/",
+          "children": [
+            {
+              "name": "CTI",
+              "id": "cti",
+              "path": "/resources/learn-more-about-attack/training/cti/",
+              "children": []
+            },
+            {
+              "name": "Purple Teaming Fundamentals",
+              "id": "purple_teaming_fundamentals",
+              "path": "/resources/learn-more-about-attack/training/purple-teaming-fundamentals/",
+              "children": []
+            },
+            {
+              "name": "ATT&CK Fundamentals",
+              "id": "attack_fundamentals",
+              "path": "/resources/learn-more-about-attack/training/attack-fundamentals/",
+              "children": []
+            },
+            {
+              "name": "Adversary Emulation",
+              "id": "adversary_emulation",
+              "path": "/resources/learn-more-about-attack/training/adversary-emulation/",
+              "children": []
+            },
+            {
+              "name": "Access Tokens Technical Primer",
+              "id": "access_tokens",
+              "path": "/resources/learn-more-about-attack/training/access-tokens/",
+              "children": []
+            },
+            {
+              "name": "SOC Assessments",
+              "id": "soc_assessments",
+              "path": "/resources/learn-more-about-attack/training/soc-assessments/",
+              "children": []
+            },
+            {
+              "name": "Threat Hunting",
+              "id": "threat_hunting",
+              "path": "/resources/learn-more-about-attack/training/threat-hunting/",
+              "children": []
+            },
+            {
+              "name": "Detection Engineering",
+              "id": "detection_engineering",
+              "path": "/resources/learn-more-about-attack/training/detection-engineering/",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+          "name": "ATT&CKcon",
+          "id": "attackcon",
+          "path": "/resources/attackcon/",
+          "children": []
+    },
+    {
+      "name": "ATT&CK Data & Tools",
+      "id": "attack-data-and-tools",
+      "path": "/resources/attack-data-and-tools/",
+      "children": []
+    },
+    {
+      "name": "FAQ",
+      "id": "faq",
+      "path": "/resources/faq/",
+      "children": []
+    },
+    {
+      "name": "Engage with ATT&CK",
+      "id": "engage-with-attack",
+      "path": "/resources/engage-with-attack/contact/",
+      "children": [
+        {
+            "name": "Stay Informed",
+            "id": "contact",
+            "path": "/resources/engage-with-attack/contact/",
+            "children": []
+        },
+        {
+          "name": "Contribute",
+          "id": "contribute",
+          "path": "/resources/engage-with-attack/contribute/",
+          "children": []
+        },
+        {
+          "name": "Benefactors",
+          "id": "benefactors",
+          "path": "/resources/engage-with-attack/benefactors/",
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "Version History",
+      "id": "versions",
+      "path": "/resources/versions/",
+      "children": []
+    },
+    {
+      "name": "Updates",
+      "id": "updates",
+      "path": "/resources/updates/",
+      "children": []
+    },
+    {
+      "name": "Legal & Branding",
+      "id": "brand",
+      "path": "/resources/legal-and-branding/",
+      "children": []
+    }
+  ]
+}

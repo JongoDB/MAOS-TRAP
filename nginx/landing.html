@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAOS TRAP Console</title>
+    <style>
+        :root {
+            --color-background: #0f141c;
+            --color-surface: #141b2d;
+            --color-surface-alt: #1a2235;
+            --color-border: #1f2c40;
+            --color-text-primary: #e8f1ff;
+            --color-text-secondary: #9fb3d9;
+            --color-accent: #2f7ee5;
+            --color-accent-soft: rgba(47, 126, 229, 0.25);
+            --color-success: #4ac1a4;
+            --sidebar-width: 280px;
+            --topbar-height: 88px;
+            --transition-base: 0.25s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--color-background);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .app-shell {
+            display: flex;
+            min-height: 100vh;
+            max-height: 100vh;
+            background: radial-gradient(circle at top left, rgba(47, 126, 229, 0.18), transparent 55%), var(--color-background);
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #101826 0%, #0d1521 100%);
+            border-right: 1px solid var(--color-border);
+            display: flex;
+            flex-direction: column;
+            padding: 28px 22px;
+            gap: 28px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-mark {
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-mark svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--color-text-primary);
+        }
+
+        .brand-text h1 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .brand-text p {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            letter-spacing: 0.04em;
+        }
+
+        .nav-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-section:not(:first-of-type) {
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-title {
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(223, 235, 255, 0.55);
+        }
+
+        .nav-item {
+            border: none;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background var(--transition-base), color var(--transition-base), transform var(--transition-base);
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            background: rgba(47, 126, 229, 0.18);
+            color: #ffffff;
+        }
+
+        .nav-item:focus-visible {
+            outline: 2px solid rgba(47, 126, 229, 0.55);
+            outline-offset: 2px;
+        }
+
+        .nav-item.active {
+            background: var(--color-accent-soft);
+            color: #ffffff;
+            box-shadow: inset 0 0 0 1px rgba(47, 126, 229, 0.4);
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.85;
+        }
+
+        .nav-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .nav-label {
+            flex: 1;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.75rem;
+            color: rgba(223, 235, 255, 0.5);
+            line-height: 1.5;
+        }
+
+        main.content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, rgba(20, 27, 45, 0.92) 0%, rgba(14, 19, 29, 0.96) 100%);
+            min-height: 100vh;
+            max-height: 100vh;
+        }
+
+        .topbar {
+            height: var(--topbar-height);
+            min-height: var(--topbar-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 32px;
+            border-bottom: 1px solid var(--color-border);
+            background: rgba(17, 24, 37, 0.92);
+            backdrop-filter: blur(16px);
+        }
+
+        .topbar-titles h2 {
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+            letter-spacing: 0.04em;
+        }
+
+        .topbar-titles p {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-pill {
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: rgba(74, 193, 164, 0.16);
+            color: #74e1c5;
+        }
+
+        .content-body {
+            flex: 1;
+            overflow: auto;
+            padding: 34px 36px 42px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            margin-bottom: 34px;
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform var(--transition-base), border var(--transition-base);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(47, 126, 229, 0.4);
+        }
+
+        .stat-card h3 {
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(223, 235, 255, 0.6);
+        }
+
+        .stat-card strong {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .stat-card span {
+            font-size: 0.85rem;
+            color: rgba(210, 226, 255, 0.65);
+        }
+
+        .stat-card p {
+            font-size: 0.9rem;
+            color: rgba(210, 226, 255, 0.75);
+            line-height: 1.4;
+        }
+
+        .panel {
+            background: var(--color-surface);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel h3 {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.85rem;
+            color: rgba(223, 235, 255, 0.6);
+        }
+
+        .app-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .app-overview-card {
+            background: var(--color-surface-alt);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: border var(--transition-base), transform var(--transition-base);
+        }
+
+        .app-overview-card:hover {
+            border-color: rgba(47, 126, 229, 0.35);
+            transform: translateY(-3px);
+        }
+
+        .app-overview-card header {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .app-overview-card header svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .app-overview-card p {
+            font-size: 0.9rem;
+            color: rgba(210, 226, 255, 0.7);
+            line-height: 1.45;
+        }
+
+        .panel-intro {
+            font-size: 0.9rem;
+            color: rgba(210, 226, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .panel-intro strong {
+            color: #9ed2ff;
+            font-weight: 600;
+        }
+
+        #app-viewer {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 0;
+        }
+
+        .frame-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(20, 27, 45, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .frame-toolbar h3 {
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: rgba(223, 235, 255, 0.7);
+        }
+
+        .ghost-button {
+            border: 1px solid rgba(47, 126, 229, 0.45);
+            background: rgba(47, 126, 229, 0.12);
+            color: #8ec7ff;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background var(--transition-base), border var(--transition-base), color var(--transition-base);
+        }
+
+        .ghost-button:hover {
+            background: rgba(47, 126, 229, 0.32);
+            border-color: rgba(47, 126, 229, 0.65);
+            color: #ffffff;
+        }
+
+        .frame-wrapper {
+            flex: 1;
+            padding: 0 32px 32px;
+        }
+
+        iframe#app-frame {
+            width: 100%;
+            height: calc(100vh - var(--topbar-height) - 122px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            background: rgba(14, 19, 29, 0.96);
+        }
+
+        @media (max-width: 1080px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+
+            .topbar {
+                padding: 18px 24px;
+            }
+
+            .content-body {
+                padding: 28px 24px 34px;
+            }
+
+            .frame-wrapper {
+                padding: 0 24px 24px;
+            }
+
+            iframe#app-frame {
+                height: calc(100vh - var(--topbar-height) - 110px);
+            }
+        }
+
+        @media (max-width: 920px) {
+            body {
+                overflow: auto;
+            }
+
+            .app-shell {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 16px;
+                padding: 20px 18px;
+            }
+
+            .brand {
+                width: 100%;
+            }
+
+            .nav-section {
+                flex: 1 1 200px;
+            }
+
+            main.content {
+                max-height: none;
+            }
+
+            iframe#app-frame {
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" aria-label="Primary navigation">
+            <div class="brand">
+                <div class="brand-mark">
+                    <!-- MITRE-style mouse trap with M -->
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Trap base -->
+                        <rect x="15" y="65" width="70" height="12" rx="2" />
+
+                        <!-- Trap platform -->
+                        <rect x="20" y="52" width="60" height="14" rx="1" />
+
+                        <!-- M-shaped spring mechanism (MITRE M style) -->
+                        <!-- Left vertical -->
+                        <rect x="25" y="22" width="6" height="32" />
+                        <!-- Left diagonal -->
+                        <path d="M 31 22 L 42 45 L 46 45 L 35 22 Z" />
+                        <!-- Center vertical -->
+                        <rect x="47" y="22" width="6" height="32" />
+                        <!-- Right diagonal -->
+                        <path d="M 53 22 L 64 45 L 68 45 L 57 22 Z" />
+                        <!-- Right vertical -->
+                        <rect x="69" y="22" width="6" height="32" />
+
+                        <!-- Trigger bar -->
+                        <rect x="38" y="48" width="24" height="3" rx="1" />
+
+                        <!-- Spring coils at base of M -->
+                        <circle cx="31" cy="54" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+                        <circle cx="50" cy="54" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+                        <circle cx="69" cy="54" r="2.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h1>MAOS TRAP</h1>
+                    <p>Security Operations Console</p>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <p class="nav-title">Overview</p>
+                <button class="nav-item active" data-mode="overview" data-title="Overview" data-description="Monitor the estate and launch hosted applications.">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Home</span>
+                </button>
+            </div>
+
+            <div class="nav-section">
+                <p class="nav-title">Applications</p>
+                <button class="nav-item" data-mode="overlay" data-url="/attack-website/" data-title="ATT&CK Website" data-description="Browse official ATT&CK tactics, techniques, groups, software, and mitigations.">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </span>
+                    <span class="nav-label">ATT&CK Website</span>
+                </button>
+                <button class="nav-item" data-mode="overlay" data-url="/attack-navigator/" data-title="ATT&CK Navigator" data-description="Layer, score, and share ATT&CK knowledge with the interactive Navigator.">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                    </span>
+                    <span class="nav-label">ATT&CK Navigator</span>
+                </button>
+                <button class="nav-item" data-mode="overlay" data-url="/attack-flow/" data-title="Attack Flow Builder" data-description="Design and manage Attack Flows to capture adversary tradecraft.">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="12" y1="2" x2="12" y2="6"></line>
+                            <line x1="12" y1="18" x2="12" y2="22"></line>
+                            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                            <line x1="2" y1="12" x2="6" y2="12"></line>
+                            <line x1="18" y1="12" x2="22" y2="12"></line>
+                            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Attack Flow Builder</span>
+                </button>
+                <button class="nav-item" data-mode="overlay" data-url="/attack-flow-viz/" data-title="Attack Flow Visualizations" data-description="Render timelines, matrices, and treemaps from Attack Flow artifacts.">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Attack Flow Visualizations</span>
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <div>Version 1.4.0</div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="topbar">
+                <div class="topbar-titles">
+                    <h2 id="active-app-name">Overview</h2>
+                    <p id="active-app-description">Monitor the estate and launch hosted applications.</p>
+                </div>
+                <div class="topbar-actions">
+                    <span class="status-pill">All services normal</span>
+                </div>
+            </div>
+
+            <section id="overview" class="content-body" aria-labelledby="overview-heading">
+                <div class="overview-grid">
+                    <article class="stat-card">
+                        <h3>System Information</h3>
+                        <p id="hostname-display">Hostname: Detecting…</p>
+                        <p id="ip-display">IP: Detecting…</p>
+                        <p id="os-display">OS: Detecting…</p>
+                    </article>
+                    <article class="stat-card">
+                        <h3>CPU</h3>
+                        <strong id="cpu-core-count">—</strong>
+                        <span id="cpu-detail">Gathering processor metrics…</span>
+                    </article>
+                    <article class="stat-card">
+                        <h3>Memory</h3>
+                        <strong id="memory-display">—</strong>
+                    </article>
+                    <article class="stat-card">
+                        <h3>Storage</h3>
+                        <strong id="storage-display">—</strong>
+                    </article>
+                </div>
+
+                <article class="panel">
+                    <h3 id="overview-heading">Application Catalog</h3>
+                    <p class="panel-intro"><strong id="app-count">—</strong> ready to launch from this console.</p>
+                    <div class="app-list">
+                        <div class="app-overview-card">
+                            <header>
+                                <svg viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                </svg>
+                                ATT&CK Website
+                            </header>
+                            <p>The full MITRE ATT&CK knowledge base including techniques, mitigations, campaigns, and datasets.</p>
+                        </div>
+                        <div class="app-overview-card">
+                            <header>
+                                <svg viewBox="0 0 24 24">
+                                    <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                                </svg>
+                                ATT&CK Navigator
+                            </header>
+                            <p>Compose layers, heat maps, and scoring models to support hunt and defense operations.</p>
+                        </div>
+                        <div class="app-overview-card">
+                            <header>
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="12" y1="2" x2="12" y2="6"></line>
+                                    <line x1="12" y1="18" x2="12" y2="22"></line>
+                                    <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                                    <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                                    <line x1="2" y1="12" x2="6" y2="12"></line>
+                                    <line x1="18" y1="12" x2="22" y2="12"></line>
+                                    <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                                    <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                                </svg>
+                                Attack Flow Builder
+                            </header>
+                            <p>Create reusable representations of adversary behaviors mapped to ATT&CK techniques.</p>
+                        </div>
+                        <div class="app-overview-card">
+                            <header>
+                                <svg viewBox="0 0 24 24">
+                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                </svg>
+                                Attack Flow Visualizations
+                            </header>
+                            <p>Translate Attack Flow artifacts into timelines, matrices, treemaps, and detailed dashboards.</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section id="app-viewer" class="content-body hidden" aria-live="polite">
+                <div class="frame-toolbar">
+                    <h3 id="app-frame-title">Application Viewer</h3>
+                    <button class="ghost-button" id="open-in-tab" type="button">Open in new tab</button>
+                </div>
+                <div class="frame-wrapper">
+                    <iframe id="app-frame" title="Application Viewer" src="about:blank"></iframe>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            const navItems = Array.from(document.querySelectorAll('.nav-item'));
+            const overviewSection = document.getElementById('overview');
+            const appViewerSection = document.getElementById('app-viewer');
+            const appFrame = document.getElementById('app-frame');
+            const appFrameTitle = document.getElementById('app-frame-title');
+            const openInTabButton = document.getElementById('open-in-tab');
+            const activeAppName = document.getElementById('active-app-name');
+            const activeAppDescription = document.getElementById('active-app-description');
+            const hostnameDisplay = document.getElementById('hostname-display');
+            const osDisplay = document.getElementById('os-display');
+            const ipDisplay = document.getElementById('ip-display');
+            const cpuCoreCount = document.getElementById('cpu-core-count');
+            const cpuDetail = document.getElementById('cpu-detail');
+            const memoryDisplay = document.getElementById('memory-display');
+            const storageDisplay = document.getElementById('storage-display');
+            const appCountDisplay = document.getElementById('app-count');
+
+            const applicationItems = navItems.filter((item) => item.dataset.mode === 'overlay');
+            if (appCountDisplay) {
+                const count = applicationItems.length;
+                appCountDisplay.textContent = count + (count === 1 ? ' application' : ' applications');
+            }
+
+            function resetMetric(element, fallback = 'Unavailable') {
+                if (element) {
+                    element.textContent = fallback;
+                }
+            }
+
+            function setLabeledMetric(element, label, value) {
+                if (!element) {
+                    return;
+                }
+                if (value) {
+                    element.textContent = label + ': ' + value;
+                } else {
+                    element.textContent = label + ': Unavailable';
+                }
+            }
+
+            function populateCPU(cpu) {
+                if (!cpuCoreCount || !cpuDetail) {
+                    return;
+                }
+                if (!cpu) {
+                    resetMetric(cpuCoreCount);
+                    resetMetric(cpuDetail);
+                    return;
+                }
+                if (cpu.cores) {
+                    const coreCount = Number(cpu.cores);
+                    if (!Number.isNaN(coreCount)) {
+                        cpuCoreCount.textContent = coreCount + (coreCount === 1 ? ' core' : ' cores');
+                    } else {
+                        cpuCoreCount.textContent = cpu.cores;
+                    }
+                } else if (cpu.model) {
+                    cpuCoreCount.textContent = cpu.model;
+                } else {
+                    resetMetric(cpuCoreCount);
+                }
+
+                const details = [];
+                if (cpu.model) {
+                    details.push(cpu.model);
+                }
+                if (cpu.threads_per_core) {
+                    details.push('Threads/core: ' + cpu.threads_per_core);
+                }
+                if (cpu.sockets) {
+                    details.push('Sockets: ' + cpu.sockets);
+                }
+
+                cpuDetail.textContent = details.length ? details.join(' • ') : 'CPU detail unavailable';
+            }
+
+            function populateMemory(memory) {
+                if (!memoryDisplay) {
+                    return;
+                }
+                if (!memory) {
+                    resetMetric(memoryDisplay);
+                    return;
+                }
+                const total = memory.total || null;
+                const used = memory.used || null;
+                if (used && total) {
+                    memoryDisplay.textContent = used + ' / ' + total;
+                } else if (used || total) {
+                    memoryDisplay.textContent = used || total;
+                } else {
+                    resetMetric(memoryDisplay);
+                }
+            }
+
+            function populateStorage(storage) {
+                if (!storageDisplay) {
+                    return;
+                }
+                if (!storage) {
+                    resetMetric(storageDisplay);
+                    return;
+                }
+                const used = storage.used || null;
+                const size = storage.size || null;
+                if (used && size) {
+                    storageDisplay.textContent = used + ' / ' + size;
+                } else if (used || size) {
+                    storageDisplay.textContent = used || size;
+                } else {
+                    resetMetric(storageDisplay);
+                }
+            }
+
+            async function loadSystemMetrics() {
+                try {
+                    const response = await fetch('/api/system-metrics', { cache: 'no-store' });
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch system metrics');
+                    }
+                    const data = await response.json();
+
+                    const primaryIp = Array.isArray(data.ip_addresses) && data.ip_addresses.length ? data.ip_addresses[0] : null;
+                    setLabeledMetric(ipDisplay, 'IP', primaryIp);
+                    setLabeledMetric(hostnameDisplay, 'Hostname', data.hostname);
+                    setLabeledMetric(osDisplay, 'OS', data.operating_system);
+
+                    populateCPU(data.cpu);
+                    populateMemory(data.memory);
+                    populateStorage(data.storage);
+                } catch (error) {
+                    console.error('System metrics error:', error);
+                    setLabeledMetric(ipDisplay, 'IP', null);
+                    setLabeledMetric(hostnameDisplay, 'Hostname', null);
+                    setLabeledMetric(osDisplay, 'OS', null);
+                    populateCPU(null);
+                    populateMemory(null);
+                    populateStorage(null);
+                }
+            }
+
+            loadSystemMetrics();
+
+            function setActiveItem(target) {
+                navItems.forEach((item) => {
+                    item.classList.toggle('active', item === target);
+                });
+            }
+
+            function showOverview(item) {
+                setActiveItem(item);
+                overviewSection.classList.remove('hidden');
+                appViewerSection.classList.add('hidden');
+                activeAppName.textContent = item.dataset.title || 'Overview';
+                activeAppDescription.textContent = item.dataset.description || '';
+            }
+
+            function showOverlay(item) {
+                const url = item.dataset.url;
+                setActiveItem(item);
+                appFrame.src = url;
+                appFrameTitle.textContent = item.dataset.title || 'Application Viewer';
+                openInTabButton.dataset.url = url;
+                overviewSection.classList.add('hidden');
+                appViewerSection.classList.remove('hidden');
+                activeAppName.textContent = item.dataset.title || '';
+                activeAppDescription.textContent = item.dataset.description || '';
+            }
+
+            navItems.forEach((item) => {
+                item.addEventListener('click', () => {
+                    const mode = item.dataset.mode;
+                    if (mode === 'overview') {
+                        showOverview(item);
+                    } else if (mode === 'overlay') {
+                        showOverlay(item);
+                    }
+                });
+            });
+
+            openInTabButton.addEventListener('click', () => {
+                const url = openInTabButton.dataset.url;
+                if (url) {
+                    window.open(url, '_blank', 'noopener');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

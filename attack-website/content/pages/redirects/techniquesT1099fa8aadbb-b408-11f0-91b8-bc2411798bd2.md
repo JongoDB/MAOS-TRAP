@@ -1,0 +1,4 @@
+Title: T1099fa8aadbb-b408-11f0-91b8-bc2411798bd2
+Template: general/redirect-index
+RedirectLink: /techniques/T1070/006
+save_as: techniques/T1099/index.html

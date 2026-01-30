@@ -1,0 +1,4 @@
+Title: mobile Techniques
+Template: general/json
+save_as: software/S0285/S0285-mobile-layer.json
+json: {"description": "Mobile techniques used by OldBoot, ATT&CK software S0285 (v1.0)", "name": "OldBoot (S0285)", "domain": "mobile-attack", "versions": {"layer": "4.5", "attack": "17", "navigator": "5.1.0"}, "techniques": [{"techniqueID": "T1398", "comment": "[OldBoot](https://attack.mitre.org/software/S0285) uses escalated privileges to modify the init script on the device's boot partition to maintain persistence.(Citation: HackerNews-OldBoot)", "score": 1, "color": "#66b1ff", "showSubtechniques": false}], "gradient": {"colors": ["#ffffff", "#66b1ff"], "minValue": 0, "maxValue": 1}, "legendItems": [{"label": "used by OldBoot", "color": "#66b1ff"}]}

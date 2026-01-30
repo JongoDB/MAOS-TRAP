@@ -1,0 +1,138 @@
+{
+    "current": {
+        "name": "v17.1",
+        "date_start": "April 22, 2025",
+        "changelog": "updates-april-2025",
+        "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v17.1"
+    },
+    "previous": [
+        {
+            "name": "v16.1",
+            "date_start": "October 31, 2024",
+            "date_end": "April 21, 2025",
+            "changelog": "updates-october-2024",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v16.1",
+            "commit": "4fd20140e8bc8f0e506a2fee7200485c538f5366"
+        },
+        {
+            "name": "v15.1",
+            "date_start": "April 23, 2024",
+            "date_end": "October 30, 2024",
+            "changelog": "updates-april-2024",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v15.1",
+            "commit": "8912d0ec2d68f4ea38b1020eb0507e6933a0f017"
+        },
+        {
+            "name": "v14.1",
+            "date_start": "October 31, 2023",
+            "date_end": "April 22, 2024",
+            "changelog": "updates-october-2023",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v14.1",
+            "commit": "3a9331ed1003712bade585c3e698ce76cf39d727"
+        },
+        {
+            "name": "v13.1",
+            "date_start": "April 25, 2023",
+            "date_end": "October 30, 2023",
+            "changelog": "updates-april-2023",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v13.1",
+            "commit": "9b7a6e9dc76eb2f1f6079a102806a648bb400bad"
+        },
+        {
+            "name": "v12.1",
+            "date_start": "October 25, 2022",
+            "date_end": "April 24, 2023",
+            "changelog": "updates-october-2022",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v12.1",
+            "commit": "f1b0fb9a723a96bd913c5adff8436d72b81824cb"
+        },
+        {
+            "name": "v11.3",
+            "date_start": "April 25, 2022",
+            "date_end": "October 24, 2022",
+            "changelog": "updates-april-2022",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v11.3",
+            "commit": "c7efd244ebdea3ae43ef91a4a58a89765e797c0f"
+        },
+        {
+            "name": "v10.1",
+            "date_start": "October 21, 2021",
+            "date_end": "April 24, 2022",
+            "changelog": "updates-october-2021",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v10.1",
+            "commit": "a352539690ff1308a885ee34aa56e245d7d02bb4"
+        },
+        {
+            "name": "v9.0",
+            "date_start": "April 29, 2021",
+            "date_end": "October 20, 2021",
+            "changelog": "updates-april-2021",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v9.0",
+            "commit": "92d79d237ddfb16e049c26070b3ee2abe0a4f8d5"
+        },
+        {
+            "name": "v8.2",
+            "date_start": "October 27, 2020",
+            "date_end": "April 28, 2021",
+            "changelog": "updates-october-2020",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v8.2",
+            "commit": "6073984f48327644bd97256aa62ecf142b690200"
+        },
+        {
+            "name": "v7.2",
+            "date_start": "July 8, 2020",
+            "date_end": "October 26, 2020",
+            "changelog": "updates-july-2020",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v7.2",
+            "commit": "11a8bce02433810457b90f61e66c5e4a609cbd66"
+        },
+        {
+            "name": "v6.3",
+            "date_start": "October 24, 2019",
+            "date_end": "March 30, 2020",
+            "changelog": "updates-october-2019",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v6.3",
+            "commit": "3f7ada7af09eae94737e18ed13094dc1794fa096"
+        },
+        {
+            "name": "v5.2",
+            "date_start": "July 31, 2019",
+            "date_end": "October 23, 2019",
+            "changelog": "updates-july-2019",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v5.2",
+            "commit": "61008763a54650c281922c410ca66e638ba0451d"
+        },
+        {
+            "name": "v4.0",
+            "date_start": "April 30, 2019",
+            "date_end": "July 30, 2019",
+            "changelog": "updates-april-2019",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v4.0",
+            "commit": "68692a59429a201865bf5181612fe80b663dcd58"
+        },
+        {
+            "name": "v3.0",
+            "date_start": "October 23, 2018",
+            "date_end": "April 29, 2019",
+            "changelog": "updates-october-2018",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v3.0",
+            "commit": "b399a97c50834b2e147c56d1ffbe634b08a7d4b1"
+        }
+    ],
+    "older": [
+        {
+            "name": "v2.0",
+            "date_start": "April 13, 2018",
+            "date_end": "October 22, 2018",
+            "changelog": "updates-april-2018",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v2.0"
+        },
+        {
+            "name": "v1.0",
+            "date_start": "January 16, 2018",
+            "date_end": "April 12, 2018",
+            "changelog": "updates-january-2018",
+            "cti_url": "https://github.com/mitre/cti/releases/tag/ATT%26CK-v1.0"
+        }
+    ]
+}

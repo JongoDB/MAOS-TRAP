@@ -1,0 +1,4 @@
+Title: enterprise Techniques
+Template: general/json
+save_as: groups/G0002/G0002-enterprise-layer.json
+json: {"description": "Enterprise techniques used by Moafee, ATT&CK group G0002 (v1.1)", "name": "Moafee (G0002)", "domain": "enterprise-attack", "versions": {"layer": "4.5", "attack": "17", "navigator": "5.1.0"}, "techniques": [{"techniqueID": "T1027", "showSubtechniques": true}, {"techniqueID": "T1027.001", "comment": "[Moafee](https://attack.mitre.org/groups/G0002) has been known to employ binary padding.(Citation: Haq 2014)", "score": 1, "color": "#66b1ff", "showSubtechniques": true}], "gradient": {"colors": ["#ffffff", "#66b1ff"], "minValue": 0, "maxValue": 1}, "legendItems": [{"label": "used by Moafee", "color": "#66b1ff"}]}

@@ -1,0 +1,4 @@
+Title: enterprise Techniques
+Template: general/json
+save_as: groups/G0036/G0036-enterprise-layer.json
+json: {"description": "Enterprise techniques used by GCMAN, ATT&CK group G0036 (v1.1)", "name": "GCMAN (G0036)", "domain": "enterprise-attack", "versions": {"layer": "4.5", "attack": "17", "navigator": "5.1.0"}, "techniques": [{"techniqueID": "T1021", "showSubtechniques": true}, {"techniqueID": "T1021.004", "comment": "[GCMAN](https://attack.mitre.org/groups/G0036) uses Putty for lateral movement.(Citation: Securelist GCMAN)", "score": 1, "color": "#66b1ff", "showSubtechniques": true}, {"techniqueID": "T1021.005", "comment": "[GCMAN](https://attack.mitre.org/groups/G0036) uses VNC for lateral movement.(Citation: Securelist GCMAN)", "score": 1, "color": "#66b1ff", "showSubtechniques": true}], "gradient": {"colors": ["#ffffff", "#66b1ff"], "minValue": 0, "maxValue": 1}, "legendItems": [{"label": "used by GCMAN", "color": "#66b1ff"}]}

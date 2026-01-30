@@ -1,0 +1,4 @@
+Title: T1547.011fcc6e395-b408-11f0-96d7-bc2411798bd2
+Template: general/redirect-index
+RedirectLink: /techniques/T1647
+save_as: techniques/T1547/011/index.html

@@ -1,0 +1,4 @@
+Title: T1088fedeac55-b408-11f0-a3f7-bc2411798bd2
+Template: general/redirect-index
+RedirectLink: /techniques/T1548/002
+save_as: techniques/T1088/index.html

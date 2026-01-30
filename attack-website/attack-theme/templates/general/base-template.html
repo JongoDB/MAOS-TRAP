@@ -1,0 +1,172 @@
+{# Base template that holds website navigation menu, banner, logos, and more. #}
+{# base-template.html is used to generate base.html with configurable information. #}
+{# base.html should be ignored and all changes must be applied to base-template.html instead. #}
+
+{% set BANNER_ENABLED = ${BANNER_ENABLED} %}
+{% set BANNER_MESSAGE = "${BANNER_MESSAGE}" %}
+{% set CONTENT_VERSION = "${CONTENT_VERSION}" -%}
+{% set WEBSITE_VERSION = "${WEBSITE_VERSION}" -%}
+{% set CHANGELOG_LOCATION = "${CHANGELOG_LOCATION}" -%}
+{% set LOGO_HEADER = "${LOGO_HEADER}" -%}
+{% set LOGO_FOOTER = "${LOGO_FOOTER}" -%}
+{% set NAVIGATION_MENU = ${NAVIGATION_MENU} -%}
+{% set ATTACK_BRANDING = ${ATTACK_BRANDING} -%}
+{% set RESOURCES = ${RESOURCES} -%}
+{% set active_page = active_page|default('index') -%}
+{% set title = title|default('MITRE ATT&CK&reg;') -%}
+{% import 'macros/search.html' as search %}
+{% import 'macros/navigation_menu.html' as navigation_menu %}
+{% set RESOURCE_NAV = ${RESOURCE_NAV} -%}
+
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    {% block head %}
+        {% include "general/osano.html" %}
+        {% include "general/google-analytics.html" %}
+        {% include "general/google-site-verification.html" %}
+
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1,shrink-to-fit=no'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel='shortcut icon' href='/theme/favicon.ico' type='image/x-icon'>
+        <title>{{ title }}</title>
+        <!-- USWDS CSS -->
+        <!-- Bootstrap CSS -->
+        <link rel='stylesheet' href='/theme/style/vendors/bootstrap.min.css' />
+        <link rel='stylesheet' href='/theme/style/vendors/bootstrap-tourist.css' />
+        <link rel='stylesheet' href='/theme/style/vendors/bootstrap-select.min.css' />
+        <!-- Fontawesome CSS -->
+        <link rel="stylesheet" href="/theme/style/vendors/fontawesome-6.5.1/css/fontawesome.min.css"/>
+        <link rel="stylesheet" href="/theme/style/vendors/fontawesome-6.5.1/css/brands.min.css"/>
+        <link rel="stylesheet" href="/theme/style/vendors/fontawesome-6.5.1/css/solid.min.css"/>
+        {% if ATTACK_BRANDING %}
+            <link rel="stylesheet" href="/theme/style-attack.css"/>
+        {% else %}
+            <link rel="stylesheet" href="/theme/style-user.css"/>
+        {% endif %}
+
+    {% endblock %}
+</head>
+
+<body>
+
+    <div class="container-fluid attack-website-wrapper d-flex flex-column h-100">
+        <div class="row sticky-top flex-grow-0 flex-shrink-1">
+            <!-- header elements -->
+            <header class="col px-0">
+                {% block nav %}
+                    {{navigation_menu.navigation_menu(NAVIGATION_MENU, LOGO_HEADER, output_file)}}
+            </header>
+            {% endblock %}
+        </div>
+        <div class="row flex-grow-0 flex-shrink-1">
+            <!-- banner elements -->
+            <div class="col px-0">
+                <!-- don't edit or remove the line below even though it's commented out, it gets parsed and replaced by the versioning feature -->
+                <!-- !versions banner! -->
+                {% if BANNER_ENABLED %}
+                    <div class="container-fluid banner-message">
+                        {{ BANNER_MESSAGE }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row flex-grow-1 flex-shrink-0">
+            <!-- main content elements -->
+            <!--start-indexing-for-search-->
+            {% block content %} {% block left %} {% endblock %} {% block right %} {% endblock %} {% endblock %}
+            <!--stop-indexing-for-search-->
+            <!-- search overlay for entire page -- not displayed inline -->
+            {{ search.searchgui() }}
+        </div>
+        <div class="row flex-grow-0 flex-shrink-1">
+            <!-- footer elements -->
+            <footer class="col footer">
+                <div class="container-fluid">
+                    <div class="row row-footer">
+                        <div class="col-2 col-sm-2 col-md-2">
+                            <div class="footer-center-responsive my-auto">
+                                <a href="https://www.mitre.org" target="_blank" rel="noopener" aria-label="MITRE">
+                                    <img src="{{ LOGO_FOOTER }}" class="mitre-logo-wtrans">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-2 col-sm-2 footer-responsive-break"></div>
+                        <div class="footer-link-group">
+                            <div class="row row-footer">
+                                <div class="px-3 col-footer">
+                                    <u class="footer-link"><a href="/resources/engage-with-attack/contact" class="footer-link">Contact Us</a></u>
+                                </div>
+                                <div class="px-3 col-footer">
+                                    <u class="footer-link"><a href="/resources/legal-and-branding/terms-of-use" class="footer-link">Terms of Use</a></u>
+                                </div>
+                                {% if RESOURCES %}
+                                    <div class="px-3 col-footer">
+                                        <u class="footer-link"><a href="/resources/legal-and-branding/privacy" class="footer-link">Privacy Policy</a></u>
+                                    </div>
+                                {% endif %}
+                                <div class="px-3 col-footer">
+                                    <u class="footer-link"><a href="{{CHANGELOG_LOCATION}}" class="footer-link" data-toggle="tooltip" data-placement="top" data-html="true" title="ATT&amp;CK content v{{CONTENT_VERSION}}&#013;Website  v{{WEBSITE_VERSION}}">Website Changelog</a></u>
+                                </div>
+                                <div class="px-3">
+                                    <u class="footer-link"><a href="/resources/legal-and-branding/privacy/#" class="footer-link" onclick="Osano.cm.showDrawer('osano-cm-dom-info-dialog-open')">Cookie Preferences</a></u>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <small class="px-3">
+                                    &copy;&nbsp;2015&nbsp;-&nbsp;2025, The MITRE Corporation. MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="w-100 p-2 footer-responsive-break"></div>
+                        {% if ATTACK_BRANDING %}
+                            <div class="col pr-4">
+                                <div class="footer-float-right-responsive-brand">
+                                    <div class="row row-footer row-footer-icon">
+                                        <div class="mb-1">
+                                            <a href="https://x.com/MITREattack" class="btn btn-footer">
+                                                <i class="fa-brands fa-x-twitter fa-lg"></i>
+                                            </a>
+                                            <a href="https://github.com/mitre-attack" class="btn btn-footer">
+                                                <i class="fa-brands fa-github fa-lg"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                                <div class="col footer-float-right-responsive-centered">
+                                    <div>
+                                        <div>
+                                            <a href="https://attack.mitre.org" class="btn btn-primary w-100">
+                                                attack.mitre.org
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+<!--stopindex-->
+
+</div>
+{% block scripts %}
+    <!--SCRIPTS-->
+    <script src="/theme/scripts/jquery-3.5.1.min.js"></script>
+    <script src="/theme/scripts/popper.min.js"></script>
+    <script src="/theme/scripts/bootstrap-select.min.js"></script>
+    <script src="/theme/scripts/bootstrap.bundle.min.js"></script>
+    <script src="/theme/scripts/site.js"></script>
+    <script src="/theme/scripts/settings.js"></script>
+    <script src="/theme/scripts/search_bundle.js"></script>
+{% endblock %}
+</body>
+</html>

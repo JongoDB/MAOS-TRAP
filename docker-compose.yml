@@ -1,0 +1,92 @@
+
+services:
+  attack-website:
+    image: attack-website:1.3.1
+    build:
+      context: ./attack-website
+      dockerfile: Dockerfile
+      args:
+        SUBDIRECTORY: attack-website
+    container_name: attack-website
+    expose:
+      - "80"
+    environment:
+      - TZ=America/New_York
+    restart: unless-stopped
+
+  attack-navigator:
+    build:
+      context: ./attack-navigator
+      dockerfile: Dockerfile
+      args:
+        BASE_PATH: /attack-navigator/
+    image: attack-navigator:1.3.3
+    container_name: attack-navigator
+    expose:
+      - "80"
+    volumes:
+     - ./attack-navigator/nav-app/src/assets:/usr/src/app/src/assets:ro
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  attack-flow:
+    build:
+      context: ./attack-flow
+      dockerfile: Dockerfile
+      args:
+        - AFB_BASE_URL=/attack-flow/
+    image: attack-flow:1.3.0
+    container_name: attack-flow
+    expose:
+      - "80"
+    restart: unless-stopped
+
+  attack-flow-viz:
+    build:
+      context: ./attack-flow/src/attack-flow-viz
+      dockerfile: Dockerfile
+      args:
+        - AFB_BASE_URL=/attack-flow/
+    image: attack-flow-viz:1.3.0
+    container_name: attack-flow-viz
+    expose:
+      - "80"
+    volumes:
+      - ./attack-flow/stix:/usr/share/nginx/html/stix:ro
+      - ./attack-flow/corpus:/usr/share/nginx/html/corpus:ro
+    restart: unless-stopped
+
+  system-metrics:
+    build:
+      context: ./system-metrics
+      dockerfile: Dockerfile
+    image: system-metrics:1.3.0
+    container_name: system-metrics
+    expose:
+      - "9000"
+    volumes:
+      - /:/host:ro
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:stable
+    container_name: attack-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/landing.html:/usr/share/nginx/html/index.html:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    depends_on:
+      - attack-website
+      - attack-navigator
+      - attack-flow
+      - attack-flow-viz
+      - system-metrics
+    restart: unless-stopped
+
+networks:
+  default:
+    name: attack-net

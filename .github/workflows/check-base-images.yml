@@ -1,0 +1,93 @@
+name: Check Base Image Updates
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-updates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Check for base image updates
+        id: check
+        run: |
+          # Array of base images used in Dockerfiles
+          declare -A base_images=(
+            ["nginx:stable-alpine"]="attack-website attack-navigator"
+            ["nginx:1.21-alpine"]="attack-flow"
+            ["nginx:alpine"]="attack-flow-viz"
+            ["python:3.11-slim"]="system-metrics"
+            ["python:3.11-slim-bullseye"]="attack-website"
+            ["node:18"]="attack-website attack-navigator"
+            ["node:20"]="attack-flow"
+          )
+
+          updates_found=false
+          update_details=""
+
+          for image in "${!base_images[@]}"; do
+            echo "Checking $image..."
+
+            # Pull latest image
+            docker pull "$image" 2>&1 | tee pull.log
+
+            # Check if image was updated
+            if grep -q "Downloaded newer image" pull.log; then
+              updates_found=true
+              services="${base_images[$image]}"
+              update_details="${update_details}- Updated: $image (affects: $services)\n"
+              echo "UPDATE: $image has a newer version"
+            fi
+          done
+
+          if [ "$updates_found" = true ]; then
+            echo "updates_available=true" >> $GITHUB_OUTPUT
+            echo -e "$update_details" > update_summary.txt
+          else
+            echo "updates_available=false" >> $GITHUB_OUTPUT
+            echo "No updates found"
+          fi
+
+      - name: Create Pull Request
+        if: steps.check.outputs.updates_available == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: rebuild containers with updated base images'
+          title: 'Update containers with latest base images'
+          body: |
+            ## Base Image Updates Available
+
+            This PR triggers a rebuild of containers to use the latest base images.
+
+            $(cat update_summary.txt)
+
+            ## Changes
+            - No code changes required
+            - Containers will be rebuilt with updated base images
+            - Security patches and bug fixes from upstream
+
+            ## Testing
+            - [ ] All containers build successfully
+            - [ ] Services start correctly
+            - [ ] Health checks pass
+
+            ---
+            *This PR was automatically created by the Check Base Image Updates workflow*
+          branch: chore/update-base-images
+          delete-branch: true
+          labels: |
+            dependencies
+            automated

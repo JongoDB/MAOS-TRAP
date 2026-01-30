@@ -1,0 +1,4 @@
+Title: mobile Techniques
+Template: general/json
+save_as: software/S0602/S0602-mobile-layer.json
+json: {"description": "Mobile techniques used by Circles, ATT&CK software S0602 (v1.0)", "name": "Circles (S0602)", "domain": "mobile-attack", "versions": {"layer": "4.5", "attack": "17", "navigator": "5.1.0"}, "techniques": [{"techniqueID": "T1430", "showSubtechniques": true}, {"techniqueID": "T1430.002", "comment": "[Circles](https://attack.mitre.org/software/S0602) can track the location of mobile devices.(Citation: CitizenLab Circles)", "score": 1, "color": "#66b1ff", "showSubtechniques": true}], "gradient": {"colors": ["#ffffff", "#66b1ff"], "minValue": 0, "maxValue": 1}, "legendItems": [{"label": "used by Circles", "color": "#66b1ff"}]}

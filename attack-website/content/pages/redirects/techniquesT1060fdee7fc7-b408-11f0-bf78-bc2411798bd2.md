@@ -1,0 +1,4 @@
+Title: T1060fdee7fc7-b408-11f0-bf78-bc2411798bd2
+Template: general/redirect-index
+RedirectLink: /techniques/T1547/001
+save_as: techniques/T1060/index.html

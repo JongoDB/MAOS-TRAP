@@ -1,0 +1,32 @@
+{% extends "general/two-column.html" %}
+{% set active_page = "resources" -%} 
+{% set title = "Changelog | MITRE ATT&CK&reg;" %}
+{% import 'macros/navigation.html' as navigation %}
+
+{% block innerleft %}
+<div id="sidebars"></div>
+{% endblock %}
+
+{% block innerright %}
+{{ super () }}
+<!--stopindex-->
+<ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/resources">Resources</a></li>
+        <li class="breadcrumb-item">Changelog</li>
+</ol>
+
+<div class="container pb-5">
+    <div class="clearfix pb-5">
+        <h1>Changelog</h1>
+        <div class="markdown-body p-3 p-md-6 changelog">
+            {{ page.content }}
+        </div>
+    </div>
+</div>
+
+<!--startindex-->
+{% endblock %}
+{% block scripts %} {{ super () }}
+<script src="/theme/scripts/sidebar-load-all.js"></script>
+{% endblock %}

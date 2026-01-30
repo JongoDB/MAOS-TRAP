@@ -1,0 +1,29 @@
+{% extends "general/base.html" %} 
+{% block content %}
+
+    {% block left %} 
+    {{ super() }}
+    <div class="sidebar nav sticky-top flex-column pr-0 pt-4 pb-3 pl-3" id="v-tab" role="tablist" aria-orientation="vertical">
+        <div class="resizer" id="resizer"></div>
+        {% block innerleft %}
+        {% endblock %}
+    </div>
+    {% endblock %}
+
+    
+    {% block right %}
+    {{ super () }}
+    <div class="tab-content col-xl-9 pt-4" id="v-tabContent">
+        <div class="tab-pane fade show active" id="v-attckmatrix" role="tabpanel" aria-labelledby="v-attckmatrix-tab">
+            {% block innerright %}
+            {% endblock %}
+        </div>
+    </div>
+    {% endblock %}
+
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<!--SCRIPTS-->
+<script src="/theme/scripts/resizer.js"></script>
+{% endblock %}

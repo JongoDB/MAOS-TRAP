@@ -1,0 +1,4 @@
+Title: T1156fa0b3fe3-b408-11f0-ab5d-bc2411798bd2
+Template: general/redirect-index
+RedirectLink: /techniques/T1546/004
+save_as: techniques/T1156/index.html

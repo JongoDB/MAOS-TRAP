@@ -1,0 +1,4 @@
+Title: T1165fb4aee84-b408-11f0-9a4e-bc2411798bd2
+Template: general/redirect-index
+RedirectLink: /techniques/T1037/005
+save_as: techniques/T1165/index.html

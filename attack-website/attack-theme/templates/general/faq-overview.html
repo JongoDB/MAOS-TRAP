@@ -1,0 +1,66 @@
+{% extends "general/two-column.html" %} 
+{% set active_page = "resources" -%}
+{% set title = "FAQ | MITRE ATT&CK&reg;" -%}
+{% set parsed = page.data | from_json %}
+{% import 'macros/navigation.html' as navigation %}
+
+{% block innerleft %}
+<div id="sidebars"></div>
+{% endblock %}
+
+{% block innerright %}
+<!--stopindex-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/resources">Resources</a></li>
+    <li class="breadcrumb-item">Frequently Asked Questions</li>
+</ol>
+
+<div class="faq container-fluid pb-3">
+    <div class="getting-started">
+        <h1>Frequently Asked Questions</h1>
+
+        <div class="card card-filter jump-to-section">
+            <div class="card-body">
+                Jump to Section
+                <ul>
+                    {% for section in parsed.sections %}
+                    <li>
+                        <a href="#{{section.id}}">{{section.name}}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="getting-started-content">
+            {% for section in parsed.sections %}
+            <div class="anchor" id="{{section.id}}"></div>
+                <div class="faq-section">
+                    <h2>{{section.name}}</h2>
+                    {% if section.relevant_links %}
+                    <div class="relevant-links tip-box">
+                        <span>
+                            <strong>Relevant Links:</strong>
+                            {% for link in section.relevant_links %}<span class="faq-link"><a href="{{link.url}}">{{link.label}}</a></span>{% endfor %}
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% for qa in section.questions %}
+                        <div class="faq-question">
+                            <h5><strong>{{qa.question}}</strong></h5>
+                            <p>{{qa.answer}}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!--startindex-->
+{% block scripts %}
+{{ super() }}
+<!--SCRIPTS-->
+<script src="/theme/scripts/sidebar-load-all.js"></script>
+{% endblock %}

@@ -1,0 +1,4 @@
+Title: enterprise Techniques
+Template: general/json
+save_as: software/S0006/S0006-enterprise-layer.json
+json: {"description": "Enterprise techniques used by pwdump, ATT&CK software S0006 (v1.1)", "name": "pwdump (S0006)", "domain": "enterprise-attack", "versions": {"layer": "4.5", "attack": "17", "navigator": "5.1.0"}, "techniques": [{"techniqueID": "T1003", "showSubtechniques": true}, {"techniqueID": "T1003.002", "comment": "[pwdump](https://attack.mitre.org/software/S0006) can be used to dump credentials from the SAM.(Citation: Wikipedia pwdump)", "score": 1, "color": "#66b1ff", "showSubtechniques": true}], "gradient": {"colors": ["#ffffff", "#66b1ff"], "minValue": 0, "maxValue": 1}, "legendItems": [{"label": "used by pwdump", "color": "#66b1ff"}]}

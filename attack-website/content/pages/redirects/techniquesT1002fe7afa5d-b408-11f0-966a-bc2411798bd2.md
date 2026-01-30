@@ -1,0 +1,4 @@
+Title: T1002fe7afa5d-b408-11f0-966a-bc2411798bd2
+Template: general/redirect-index
+RedirectLink: /techniques/T1560
+save_as: techniques/T1002/index.html

@@ -1,0 +1,33 @@
+{% extends "general/two-column.html" %}
+{% set active_page = "resources" -%}
+{% set title = page.title + " | MITRE ATT&CK&reg;" -%} 
+{% import 'macros/navigation.html' as navigation %}
+
+{% block innerleft %}
+<div id="sidebars"></div>
+{% endblock %}
+
+{% block innerright %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/resources/">Resources</a></li>
+    <li class="breadcrumb-item">{{ page.title }}</li>
+</ol>
+
+<div class="container pb-3">
+    <div class="card-block">
+        <div class="clearfix pb-3">
+            <div class="clearfix pb-3">
+                <h1>{{ page.title }}</h1>
+                    {{ page.content }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super () }}
+<script src="/theme/scripts/tables.js"></script>
+<script src="/theme/scripts/sidebar-load-all.js"></script>
+{% endblock %}

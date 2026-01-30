@@ -1,0 +1,6 @@
+Unlinked pages report:
+
+Pages listed were not linked from another page
+
+/full-coverage.html
+/macro-technique-refinement.html

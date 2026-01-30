@@ -1,0 +1,127 @@
+name: Version Bump
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'attack-website/**'
+      - 'attack-navigator/**'
+      - 'attack-flow/**'
+      - 'system-metrics/**'
+      - 'nginx/**'
+      - 'docker-compose.yml'
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: true
+        default: 'minor'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get current version
+        id: current
+        run: |
+          # Extract version from landing page
+          version=$(grep -oP 'Version \K[0-9]+\.[0-9]+\.[0-9]+' nginx/landing.html | head -1)
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "Current version: $version"
+
+      - name: Calculate new version
+        id: new
+        run: |
+          version="${{ steps.current.outputs.version }}"
+          IFS='.' read -r major minor patch <<< "$version"
+
+          bump_type="${{ github.event.inputs.bump_type }}"
+          if [ -z "$bump_type" ]; then
+            bump_type="minor"
+          fi
+
+          case $bump_type in
+            major)
+              major=$((major + 1))
+              minor=0
+              patch=0
+              ;;
+            minor)
+              minor=$((minor + 1))
+              patch=0
+              ;;
+            patch)
+              patch=$((patch + 1))
+              ;;
+          esac
+
+          new_version="$major.$minor.$patch"
+          echo "version=$new_version" >> $GITHUB_OUTPUT
+          echo "New version: $new_version"
+
+      - name: Update version in landing page
+        run: |
+          old_version="${{ steps.current.outputs.version }}"
+          new_version="${{ steps.new.outputs.version }}"
+
+          sed -i "s/Version $old_version/Version $new_version/g" nginx/landing.html
+
+          echo "Updated version from $old_version to $new_version"
+
+      - name: Create CHANGELOG entry
+        run: |
+          new_version="${{ steps.new.outputs.version }}"
+          date=$(date +%Y-%m-%d)
+
+          if [ ! -f CHANGELOG.md ]; then
+            echo "# Changelog" > CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            echo "All notable changes to this project will be documented in this file." >> CHANGELOG.md
+            echo "" >> CHANGELOG.md
+          fi
+
+          # Create temporary file with new entry
+          {
+            head -n 4 CHANGELOG.md
+            echo ""
+            echo "## [$new_version] - $date"
+            echo ""
+            echo "### Changed"
+            echo "- Updated container builds and dependencies"
+            echo ""
+            tail -n +5 CHANGELOG.md
+          } > CHANGELOG.md.tmp
+
+          mv CHANGELOG.md.tmp CHANGELOG.md
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          new_version="${{ steps.new.outputs.version }}"
+
+          git add nginx/landing.html CHANGELOG.md
+          git commit -m "chore: bump version to $new_version" || echo "No changes to commit"
+          git push
+
+      - name: Create release tag
+        run: |
+          new_version="${{ steps.new.outputs.version }}"
+
+          git tag -a "v$new_version" -m "Release version $new_version"
+          git push origin "v$new_version"
