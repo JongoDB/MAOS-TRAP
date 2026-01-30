@@ -1,0 +1,3 @@
+[submodule "attack-flow"]
+	path = attack-flow
+	url = https://github.com/center-for-threat-informed-defense/attack-flow.git
