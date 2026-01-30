@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Flow Visualizations</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Attack Flow Visualizations</h1>
+            <p>Upload Attack Flow files to Generate Visualizations</p>
+        </header>
+
+        <div class="upload-section">
+            <input type="file" id="fileInput" accept=".json,.afb" />
+            <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                Supports Attack Flow STIX bundles (.json) and Attack Flow Builder files (.afb)
+            </p>
+        </div>
+
+        <div id="error-message" class="error hidden"></div>
+
+        <nav class="viz-tabs">
+            <button class="tab-button active" data-viz="timeline">Timeline View</button>
+            <button class="tab-button" data-viz="tactic-table">Tactic Table</button>
+            <button class="tab-button" data-viz="matrix">Matrix View</button>
+            <button class="tab-button" data-viz="treemap">Treemap View</button>
+        </nav>
+
+        <div class="viz-container">
+            <div id="timeline-viz" class="viz-panel active">
+                <h2>Timeline View</h2>
+                <div class="controls">
+                    <label>
+                        <input type="checkbox" id="showTimestamps" checked />
+                        Show Timestamps
+                    </label>
+                    <label>
+                        <input type="checkbox" id="showDescriptions" checked />
+                        Show Descriptions
+                    </label>
+                    <button id="exportTimeline">Export as PNG</button>
+                </div>
+                <div id="timeline-content"></div>
+            </div>
+
+            <div id="tactic-table-viz" class="viz-panel">
+                <h2>Tactic Table</h2>
+                <div class="controls">
+                    <button id="exportTable">Export as CSV</button>
+                    <button id="exportTablePNG">Export as PNG</button>
+                </div>
+                <div id="tactic-table-content"></div>
+            </div>
+
+            <div id="matrix-viz" class="viz-panel">
+                <h2>Matrix View</h2>
+                <div class="controls">
+                    <label>
+                        Domain:
+                        <select id="matrixDomain">
+                            <option value="enterprise">Enterprise</option>
+                            <option value="mobile">Mobile</option>
+                            <option value="ics">ICS</option>
+                        </select>
+                    </label>
+                    <button id="exportMatrix">Export as PNG</button>
+                </div>
+                <div id="matrix-content"></div>
+            </div>
+
+            <div id="treemap-viz" class="viz-panel">
+                <h2>Treemap View</h2>
+                <div class="controls">
+                    <label>
+                        Color By:
+                        <select id="treemapColorBy">
+                            <option value="tactic">Tactic</option>
+                            <option value="frequency">Frequency</option>
+                        </select>
+                    </label>
+                    <button id="exportTreemap">Export as PNG</button>
+                </div>
+                <div id="treemap-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="js/parsers/attack-flow-parser.js"></script>
+    <script src="js/timeline.js"></script>
+    <script src="js/tactic-table.js"></script>
+    <script src="js/matrix.js"></script>
+    <script src="js/treemap.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+

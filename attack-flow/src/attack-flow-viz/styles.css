@@ -1,0 +1,508 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 30px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    color: #0055A4;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #666;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#fileInput {
+    padding: 12px 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 500px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#fileInput:hover {
+    border-color: #0055A4;
+}
+
+button {
+    background: #0055A4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #003d7a;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.viz-tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 2px;
+}
+
+.tab-button {
+    flex: 1;
+    background: #e0e0e0;
+    color: #333;
+    border: none;
+    padding: 15px;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.tab-button.active {
+    background: white;
+    color: #0055A4;
+}
+
+.viz-container {
+    background: white;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    min-height: 600px;
+}
+
+.viz-panel {
+    display: none;
+    padding: 30px;
+}
+
+.viz-panel.active {
+    display: block;
+}
+
+.viz-panel h2 {
+    color: #0055A4;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #0055A4;
+}
+
+.controls {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.controls label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.controls select {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.error {
+    background: #ff4444;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+/* Horizontal Timeline Styles */
+#timeline-content {
+    overflow: visible;
+}
+
+.flow-header {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border-left: 4px solid #0055A4;
+}
+
+.flow-header h3 {
+    color: #0055A4;
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+}
+
+.flow-description {
+    color: #666;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.flow-meta {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.flow-meta .badge {
+    padding: 4px 12px;
+    background: #0055A4;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.flow-meta .timestamp {
+    color: #999;
+    font-size: 13px;
+}
+
+.timeline-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.zoom-btn {
+    padding: 8px 16px;
+    background: #0055A4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.zoom-btn:hover {
+    background: #003d7a;
+}
+
+.zoom-level {
+    margin-left: auto;
+    font-weight: 600;
+    color: #555;
+}
+
+.zoom-level #zoomLevel {
+    color: #0055A4;
+    font-weight: 700;
+}
+
+.horizontal-timeline-container {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+    overflow-y: visible;
+}
+
+.horizontal-timeline-container svg {
+    display: block;
+}
+
+.time-axis path,
+.time-axis line {
+    stroke: #999;
+}
+
+.time-axis text {
+    fill: #666;
+    font-family: 'Courier New', monospace;
+}
+
+.timeline-card {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.timeline-card:hover rect:first-child {
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.timeline-tooltip {
+    line-height: 1.6;
+}
+
+.timeline-error,
+.timeline-warning {
+    margin: 20px 0;
+}
+
+/* Tactic Filters */
+.tactic-filters {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.tactic-filters h4 {
+    color: #0055A4;
+    font-size: 14px;
+    margin: 0 0 12px 0;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.tactic-filter-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+}
+
+.tactic-filter-label:hover {
+    background: #f0f0f0;
+}
+
+.tactic-checkbox {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.tactic-color-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.tactic-filter-text {
+    font-size: 13px;
+    color: #333;
+    flex: 1;
+}
+
+/* Legacy timeline styles removed - now using horizontal timeline */
+
+/* Tactic Table Styles */
+.tactic-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tactic-table th,
+.tactic-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.tactic-table th {
+    background: #0055A4;
+    color: white;
+    font-weight: 600;
+}
+
+.tactic-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.tactic-table tr:hover {
+    background: #f0f0f0;
+}
+
+.technique-link {
+    color: #0055A4;
+    text-decoration: none;
+}
+
+.technique-link:hover {
+    text-decoration: underline;
+}
+
+/* Matrix Styles */
+#matrix-content {
+    overflow-x: auto;
+}
+
+.matrix-grid {
+    display: inline-grid;
+    gap: 2px;
+    min-width: 100%;
+}
+
+.matrix-cell {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-size: 12px;
+    min-width: 120px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.matrix-cell.header {
+    background: #0055A4;
+    color: white;
+    font-weight: 600;
+}
+
+.matrix-cell.empty {
+    background: #f5f5f5;
+}
+
+.matrix-cell.highlighted {
+    background: #ff6b6b;
+    color: white;
+    font-weight: 600;
+}
+
+.matrix-cell.highlighted:hover {
+    background: #ff5252;
+    transform: scale(1.05);
+}
+
+/* Treemap Styles */
+#treemap-content svg {
+    width: 100%;
+    height: 600px;
+}
+
+.treemap-cell {
+    stroke: #fff;
+    stroke-width: 2px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.treemap-cell:hover {
+    opacity: 0.8;
+}
+
+.treemap-label {
+    fill: white;
+    font-size: 12px;
+    font-weight: 600;
+    pointer-events: none;
+    text-anchor: middle;
+}
+
+.treemap-count {
+    fill: white;
+    font-size: 10px;
+    pointer-events: none;
+    text-anchor: middle;
+}
+
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 1000;
+    display: none;
+}
+
+/* Loading animation */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+
+.loading::after {
+    content: '...';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}
+
