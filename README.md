@@ -1,10 +1,10 @@
-# MAOS TRAP - MITRE ATT&CK Apps Platform
+# MAOS-TRAP - MITRE and Other Stuff
 
 A containerized deployment platform for MITRE ATT&CK applications with an integrated management console.
 
 ## Overview
 
-MAOS TRAP (MITRE ATT&CK Operations Security Threat Response & Analysis Platform) provides a unified interface for deploying and accessing multiple MITRE ATT&CK tools and applications. The platform includes:
+MAOS-TRAP (MITRE and Other Stuff - Threat Response & Analysis Platform) provides a unified interface for deploying and accessing multiple MITRE ATT&CK tools and applications. The platform includes:
 
 - **ATT&CK Website** - Complete MITRE ATT&CK knowledge base
 - **ATT&CK Navigator** - Interactive layer-based visualization and annotation tool
@@ -41,8 +41,8 @@ MAOS TRAP (MITRE ATT&CK Operations Security Threat Response & Analysis Platform)
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd mitre-attack-apps
+git clone https://github.com/JongoDB/MAOS-TRAP.git
+cd MAOS-TRAP
 ```
 
 2. Generate SSL certificates (optional, for HTTPS):

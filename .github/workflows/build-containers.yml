@@ -20,7 +20,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: ${{ github.repository_owner }}/maos-trap
+  IMAGE_PREFIX: jongodb/maos-trap
 
 jobs:
   build:
