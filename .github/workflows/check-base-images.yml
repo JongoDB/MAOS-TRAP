@@ -55,6 +55,9 @@ jobs:
           if [ "$updates_found" = true ]; then
             echo "updates_available=true" >> $GITHUB_OUTPUT
             echo -e "$update_details" > update_summary.txt
+            # Create marker file with timestamp
+            echo "Last updated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")" > .base-images-updated
+            echo -e "\n$update_details" >> .base-images-updated
           else
             echo "updates_available=false" >> $GITHUB_OUTPUT
             echo "No updates found"
