@@ -1,0 +1,8 @@
+- Updated: node:18 (affects: attack-website attack-navigator)
+- Updated: nginx:alpine (affects: attack-flow-viz)
+- Updated: python:3.11-slim (affects: system-metrics)
+- Updated: node:20 (affects: attack-flow)
+- Updated: nginx:stable-alpine (affects: attack-website attack-navigator)
+- Updated: python:3.11-slim-bullseye (affects: attack-website)
+- Updated: nginx:1.21-alpine (affects: attack-flow)
+
